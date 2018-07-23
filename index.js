@@ -1,21 +1,21 @@
-// var http = require('http');
 var fs = require('fs');
 var request = require('request');
+var systemVersion = process.env.SYSTEM_VERSION;
 yaml = require('js-yaml');
-request('https://github.com/kube-HPC/release-manager/releases/download/1.1.292/version.json', function (error, response, body) {
+request(`https://github.com/kube-HPC/release-manager/releases/download/${systemVersion}/version.json`, function (error, response, body) {
   if (!error && response.statusCode == 200) {
      var importedJSON = JSON.parse(body);
      var filename = "version.json"
-     const project = importedJSON.versions.forEach(o=>console.log("project:", o.project));
+     //const project = importedJSON.versions.forEach(o=>console.log("project:", o.project));
      importedJSON.versions.forEach(o=>console.log("project:", o.project,"tag:",o.tag));
      var data = JSON.stringify(body.replace(/\r?\n|\r/g, " "));
      fs.writeFileSync(filename, data.trim());
      var importedYAML = yaml.safeLoad(fs.readFileSync('/home/eli/Dropbox/hkube/helm/hkube/values.yaml', 'utf8'));
-     console.log(importedYAML);
+     //console.log(importedYAML);
      let yamlClone = { ...importedYAML};
-     console.log(yamlClone);
+     //console.log(yamlClone);
      const indentedJson = JSON.stringify(importedYAML, null,4);
-     console.log(indentedJson);
+     //console.log(indentedJson);
   }
 })
 
