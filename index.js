@@ -9,7 +9,7 @@ request(`https://github.com/kube-HPC/release-manager/releases/download/${systemV
      //const project = importedJSON.versions.forEach(o=>console.log("project:", o.project));
      importedJSON.versions.forEach(o=>console.log("project:", o.project,"tag:",o.tag));
      var data = JSON.stringify(body.replace(/\r?\n|\r/g, " "));
-     fs.writeFileSync(filename, data.trim());
+     fs.writeFileSync(filename, data.trim().replace(/\s/g,''));
      var importedYAML = yaml.safeLoad(fs.readFileSync('/home/eli/Dropbox/hkube/helm/hkube/values.yaml', 'utf8'));
      //console.log(importedYAML);
      let yamlClone = { ...importedYAML};
